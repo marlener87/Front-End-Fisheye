@@ -93,3 +93,31 @@ h1 {
     color: #757575;
 }
 
+
+
+
+
+
+/* ajout code */
+.photograph-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.photograph-main {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.city {
+    color: #901C1C;
+}
+
+.imagePhotographer {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    border-radius: 100px;
+}

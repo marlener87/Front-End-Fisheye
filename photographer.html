@@ -9,12 +9,34 @@
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="index.html"><img src="assets/images/logo.png" class="logo" /></a>
     </header>
     <main id="main">
       <div class="photograph-header">
+        <div class="descriptif">
+          <h1 class="name" id="userName"></h1>
+          <p class="city" id="userCity"></p>
+          <p id="userTagline"></p>
+        </div>
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        <span id="userImage"></span>
       </div>
+
+      <div class="photograph-main">
+        <label for="tri">Trier par</label>
+        <input type="text" id="tri" name="tri">
+        
+        <div >
+          <span class="mediaPhotos" id="mediaPhotos"></span>
+          <p id="titlePhoto"></p>
+          <span>
+            <p id="likesPhoto"></p>
+            <img src="" alt="likes">
+          </span>
+          
+        </div>
+      </div>
+      
     </main>
 
     <!-- MODALE -->

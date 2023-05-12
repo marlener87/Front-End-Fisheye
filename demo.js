@@ -1,5 +1,5 @@
 //Mettre le code JavaScript lié à la page photographer.html
-const photographers = [
+const PHOTOGRAPHERS = [
 	{
 		"name": "Mimi Keel",
 		"id": 243,
@@ -56,7 +56,7 @@ const photographers = [
 	}
 ];
 
-const medias = [
+const MEDIAS = [
 	{
 		"id": 342550,
 		"photographerId": 82,
@@ -593,64 +593,8 @@ const medias = [
 	}
 ];
 
+const MY_DATA = {
 
-const my_data = {
-	"photographers": [
-		{
-			"name": "Mimi Keel",
-			"id": 243,
-			"city": "London",
-			"country": "UK",
-			"tagline": "Voir le beau dans le quotidien",
-			"price": 400,
-			"portrait": "MimiKeel.jpg"
-		},
-		{
-			"name": "Ellie-Rose Wilkens",
-			"id": 930,
-			"city": "Paris",
-			"country": "France",
-			"tagline": "Capturer des compositions complexes",
-			"price": 250,
-			"portrait": "EllieRoseWilkens.jpg"
-		},
-		{
-			"name": "Tracy Galindo",
-			"id": 82,
-			"city": "Montreal",
-			"country": "Canada",
-			"tagline": "Photographe freelance",
-			"price": 500,
-			"portrait": "TracyGalindo.jpg"
-		},
-		{
-			"name": "Nabeel Bradford",
-			"id": 527,
-			"city": "Mexico City",
-			"country": "Mexico",
-			"tagline": "Toujours aller de l'avant",
-			"price": 350,
-			"portrait": "NabeelBradford.jpg"
-		},
-		{
-			"name": "Rhode Dubois",
-			"id": 925,
-			"city": "Barcelona",
-			"country": "Spain",
-			"tagline": "Je crée des souvenirs",
-			"price": 275,
-			"portrait": "RhodeDubois.jpg"
-		},
-		{
-			"name": "Marcel Nikolic",
-			"id": 195,
-			"city": "Berlin",
-			"country": "Germany",
-			"tagline": "Toujours à la recherche de LA photo",
-			"price": 300,
-			"portrait": "MarcelNikolic.jpg"
-		}
-	],
 	"media": [
 		{
 			"id": 342550,
@@ -1241,69 +1185,65 @@ const data = {
     
 }
 
-
 // data.photographer.name 
+// ...
+
+// console.log(location.href.split('?')[1].replace('id=', ''));
+
 const userName = document.querySelector('#userName');
 const userCity = document.querySelector('#userCity');
 const userImage = document.querySelector('#userImage');
-const userTagline = document.querySelector('#userTagline');
 
-// galerie photos des photographes
-const mediaPhotos = document.querySelector('#mediaPhotos');
-const titlePhoto = document.querySelector('#titlePhoto');
-const likesPhoto = document.querySelector('#likesPhoto');
 
 // the URL of the current page
-let url = new URL(window.location.href);
-//let pageID = url.searchParams.get("id");
-//console.log(pageID);
+let url = new URL(location.href);
+let PHOTOGRAPHER_ID = url.searchParams.get("id");
 
-let photographer_ID = url.searchParams.get("id");
-console.log(photographer_ID);
+let myPhotographer = null;
+
+for(let i = 0; i < PHOTOGRAPHERS.length ; i++){
+	if(PHOTOGRAPHERS[i].id ==  PHOTOGRAPHER_ID){
+		myPhotographer = PHOTOGRAPHERS[i]
+	}
+}
+
+userName.innerHTML = myPhotographer.name;
+userCity.innerHTML = myPhotographer.city;
+userImage.innerHTML = `<img src="assets/images/FishEye_Photos/Photographers_ID_Photos/${myPhotographer.portrait}" alt="">`;
+
+
+
+console.log(MEDIAS)
+
+
+//1 - On met une constance MEDIA et on l'affiche 
+
+// Parcours liste de MEDIA
+    // Si photographerID du media en cours == PHOTOGRAPHER_ID
+		// Afficher le media en cours
+
+
+
+
+
+
+//-----------------------
 
 // get the photographer data
-let myPhotographer = null;
-for(let i = 0; i < photographers.length; i++) {
-	if(photographers[i].id == photographer_ID) {
-		myPhotographer = photographers[i]
-	}
-}
-
-// get the photographer photos
-let gallery_photos = null;
-for(let i = 0; i < medias.length; i++) {
-	if(medias[i].photographerId  == photographer_ID) {
-		gallery_photos = medias[i]
-		console.log(gallery_photos)
+let photographer = null;
+for(let i = 0; i < MY_DATA.photographers.length - 1; i++){
+	
+	if(MY_DATA.photographers[i].id == pageID){
+		 photographer = MY_DATA.photographers[i];
 	}
 }
 
 
-// console.log(myPhotographer.name)
-userName.innerHTML = myPhotographer.name;
-userCity.innerHTML = `${myPhotographer.city}, ${myPhotographer.country}`;
-userTagline.innerHTML = myPhotographer.tagline;
-userImage.innerHTML = `<img src="./assets/images/FishEye_Photos/Photographers_ID_Photos/${myPhotographer.portrait}" alt='photo du photographe' class='imagePhotographer'>`;
-//console.log(userImage)
-
-mediaPhotos.innerHTML = `<img src='./assets/images/FishEye_Photos/${gallery_photos.image}'`;
-
-
-
-
-
-
-// for(let i = 0; i < my_data.photographers.length; i++){
-//    if(my_data.photographers[i].id == pageID){
-//       //console.log(my_data.photographers[i]);
-// 	  photographer = my_data.photographers[i];
-//    }
-// }
-// console.log(photographer);
+console.log(photographer);
 
 /**
  * 
- 
+ */
 function photographerForm(data) {
 	const {id, name, portrait, city, country, tagline } = data;
 
@@ -1317,7 +1257,7 @@ function photographerForm(data) {
 		return (newForm);
 	}
 	return { name, portrait, city, country, tagline, price, id, getUserCard }
-}*/
+}
 
 
 

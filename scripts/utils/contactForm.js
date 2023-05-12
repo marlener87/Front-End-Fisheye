@@ -5,7 +5,7 @@ const closeForm = document.querySelector(".close");
 const firstName = document.querySelector("#first");
 const lastName = document.querySelector("#last");
 const email = document.querySelector("#email");
-const message = documment.querySelector("#message");
+const message = document.querySelector("#message");
 
 
 
