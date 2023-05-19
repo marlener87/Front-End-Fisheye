@@ -593,7 +593,6 @@ const medias = [
 	}
 ];
 
-
 const my_data = {
 	"photographers": [
 		{
@@ -1189,7 +1188,6 @@ const my_data = {
 	]
 }
 
-// ...
 const data = {
     photographer : {
         "name": "Mimi Keel",
@@ -1242,19 +1240,98 @@ const data = {
 }
 
 
+/////////
+// CONSTANTES / VARIABLES
+/////////
+
+
 // data.photographer.name 
 const userName = document.querySelector('#userName');
 const userCity = document.querySelector('#userCity');
 const userImage = document.querySelector('#userImage');
 const userTagline = document.querySelector('#userTagline');
+const tjm = document.querySelector('#tjm');
+const totalLikes = document.querySelector('#totalLikes');
 
 // galerie photos des photographes
 const mediaPhotos = document.querySelector('#mediaPhotos');
 const titlePhoto = document.querySelector('#titlePhoto');
 const likesPhoto = document.querySelector('#likesPhoto');
 
+let url = null;
+let myPhotographer = null;
+let gallery_photos = [];
+
+/////////
+// FONCTIONS
+/////////
+/**
+ * Récupère les informations du bon photographe 
+ */
+function getPhotographerData (){
+	//const getPhotographerData = () => {
+	for(let i = 0; i < photographers.length; i++) {
+		if(photographers[i].id == photographer_ID) {
+			myPhotographer = photographers[i]
+		}
+	}
+}
+
+/**
+ * Update photographer informations
+ */
+//function displayPhotographerInformations () {
+const displayPhotographerInformations = () => {
+	userName.innerHTML = myPhotographer.name;
+	userCity.innerHTML = `${myPhotographer.city}, ${myPhotographer.country}`;
+	userTagline.innerHTML = myPhotographer.tagline;
+
+	userImage.src = `./assets/images/FishEye_Photos/Photographers_ID_Photos/${myPhotographer.portrait}`
+	userImage.alt = `Portrait du photographe ${myPhotographer.name}`
+	// afficher le prix tjm
+	tjm.innerHTML = `${myPhotographer.price}€ / jour`;
+	// afficher le nombre de likes
+
+}
+
+/**
+ * fonction pour renmplir l'encart, avec le nombre total de likes et le TJM
+ */
+function encart () {
+	// tjm.innerHTML = `${myPhotographer.price}€ / jour`;
+	totalLikes.innerHTML = totalCoeurs                 ;
+}
+
+
+
+/////////
+// INITIALISATIONS
+/////////
+
+
+
+
+// variable coeur total 
+function totalHearts(hearts) {
+	
+	let somme_coeurs = 0;
+
+	for(let i = 0; i < hearts.length; i++) {
+		somme_coeurs = somme_coeurs + hearts[i];
+	}
+	return somme_coeurs;
+}
+
+ const totalCoeurs = totalHearts([10, 20, 30, 40, 50]);
+//const totalCoeur = totalHearts()
+
+
+
+
+
+
 // the URL of the current page
-let url = new URL(window.location.href);
+url = new URL(window.location.href);
 //let pageID = url.searchParams.get("id");
 //console.log(pageID);
 
@@ -1262,31 +1339,97 @@ let photographer_ID = url.searchParams.get("id");
 console.log(photographer_ID);
 
 // get the photographer data
-let myPhotographer = null;
-for(let i = 0; i < photographers.length; i++) {
-	if(photographers[i].id == photographer_ID) {
-		myPhotographer = photographers[i]
-	}
-}
+
+
 
 // get the photographer photos
-let gallery_photos = null;
+
 for(let i = 0; i < medias.length; i++) {
 	if(medias[i].photographerId  == photographer_ID) {
-		gallery_photos = medias[i]
-		console.log(gallery_photos)
+		const newMedia = {
+			...medias[i],
+			isLiked : true
+		}
+		gallery_photos.push(newMedia)
+		// ajouter le calcul du coeur total avec coeurtotal += ... 
 	}
 }
 
 
-// console.log(myPhotographer.name)
-userName.innerHTML = myPhotographer.name;
-userCity.innerHTML = `${myPhotographer.city}, ${myPhotographer.country}`;
-userTagline.innerHTML = myPhotographer.tagline;
-userImage.innerHTML = `<img src="./assets/images/FishEye_Photos/Photographers_ID_Photos/${myPhotographer.portrait}" alt='photo du photographe' class='imagePhotographer'>`;
-//console.log(userImage)
 
-mediaPhotos.innerHTML = `<img src='./assets/images/FishEye_Photos/${gallery_photos.image}'`;
+
+
+// appael des fonctions
+getPhotographerData()
+displayPhotographerInformations()
+encart()
+
+
+
+
+// Update medias informations
+function mediasPhotographer() {
+	for(let i = 0; i < gallery_photos.length ; i++) {
+		const item = gallery_photos[i]
+	
+		const media = document.createElement('div')
+		media.classList.add('cardMedia')
+		media.setAttribute('data-id', item.id)
+	
+		//console.log(media.getAttribute('data-id'))
+			 //<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" />
+		
+		console.log(item.isLiked)
+		media.innerHTML = `
+			<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" class="mediaPhotographer" />
+			<div class="mediaLikes">
+				<p id="titlePhoto">${item.title}</p>
+				<button	class="btnLike ${item.isLiked ? 'isLiked' : ''}">
+				<p id="likesPhoto">${item.likes}</p>	
+				</button>
+			</div>	`
+	
+		mediaPhotos.append(media)
+	}
+}
+
+for(let i = 0; i < gallery_photos.length ; i++) {
+	const item = gallery_photos[i]
+
+	const media = document.createElement('div')
+	media.classList.add('cardMedia')
+	media.setAttribute('data-id', item.id)
+
+	//console.log(media.getAttribute('data-id'))
+	 	//<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" />
+	
+	console.log(item.isLiked)
+	media.innerHTML = `
+		<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" class="mediaPhotographer" />
+		<div class="mediaLikes">
+			<p id="titlePhoto">${item.title}</p>
+			<button	class="btnLike ${item.isLiked ? 'isLiked' : ''}">
+			<p id="likesPhoto">${item.likes}</p>	
+			</button>
+		</div>	`
+
+	mediaPhotos.append(media)
+}
+
+
+// TODO n°1
+// Refactoring => faire des fonctions
+
+
+// TODO  n°2
+// 1- Récupérer tous les noeuds btnLike avec querySelectorAll => /!\ retourne un tableau /!\
+// 2- On boucle sur tableau et à chaque fois on créer un listener => item.addEventListener('click')
+// 3- On va chercher si le media il est like ou pas
+// 4- On inverse la valeur => on increment ou décremente le total
+
+
+
+
 
 
 

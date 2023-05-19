@@ -20,6 +20,7 @@ h1 {
 
 .main {
     margin-bottom: 80px;
+    width: auto;
 }
 
 .logo {
@@ -93,22 +94,39 @@ h1 {
     color: #757575;
 }
 
+.photographerImage {
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    overflow: hidden;   
+}
+.photographerImage  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.6);
+}
 
 
 
 
 
-/* ajout code */
+
+/* ajout c{ode */
 .photograph-header {
+    /*width: 100%;*/
+    width: auto;
     display: flex;
-    align-items: center;
     justify-content: space-around;
+    align-items: center;
 }
 
 .photograph-main {
-    margin-top: 20px;
     display: flex;
     align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px 100px;
 }
 
 .city {
@@ -120,4 +138,63 @@ h1 {
     width: 200px;
     object-fit: cover;
     border-radius: 100px;
+}
+
+.encart {
+    display: flex;
+    justify-content: space-between;
+    background-color: #DB8876;
+    width: 200px;
+    padding: 0 30px;
+    position: fixed;
+    bottom: 0;
+    right: 35px;
+}
+
+.totalLikes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.numberLike {
+    padding-right: 5px;
+}
+
+.fa-regular {
+    color: #901C1C;
+}
+
+.fa-solid {
+    color: #901C1C;
+}
+
+.mediaPhotos {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.cardMedia {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+    /* margin-right: 95px; */
+}
+/* .cardMedia:nth-child(3) {
+    margin-right: 0;
+} */
+
+.mediaPhotographer {
+    width: 300px;
+    height: 300px;
+}
+
+.mediaLikes {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
