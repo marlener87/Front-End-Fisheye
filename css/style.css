@@ -198,3 +198,7 @@ h1 {
     display: flex;
     justify-content: space-between;
 }
+
+.tri {
+    margin-bottom: 20px;
+}

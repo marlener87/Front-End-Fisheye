@@ -1244,7 +1244,6 @@ const data = {
 // CONSTANTES / VARIABLES
 /////////
 
-
 // data.photographer.name 
 const userName = document.querySelector('#userName');
 const userCity = document.querySelector('#userCity');
@@ -1262,6 +1261,11 @@ let url = null;
 let myPhotographer = null;
 let gallery_photos = [];
 
+
+
+
+
+
 /////////
 // FONCTIONS
 /////////
@@ -1276,6 +1280,7 @@ function getPhotographerData (){
 		}
 	}
 }
+
 
 /**
  * Update photographer informations
@@ -1294,36 +1299,96 @@ const displayPhotographerInformations = () => {
 
 }
 
-/**
- * fonction pour renmplir l'encart, avec le nombre total de likes et le TJM
- */
-function encart () {
-	// tjm.innerHTML = `${myPhotographer.price}€ / jour`;
-	totalLikes.innerHTML = totalCoeurs                 ;
-}
-
-
-
 /////////
 // INITIALISATIONS
 /////////
-
-
-
-
-// variable coeur total 
-function totalHearts(hearts) {
+// Update medias informations
+function mediasPhotographer() {
+	for(let i = 0; i < gallery_photos.length; i++) {
+		const item = gallery_photos[i];
 	
-	let somme_coeurs = 0;
-
-	for(let i = 0; i < hearts.length; i++) {
-		somme_coeurs = somme_coeurs + hearts[i];
+		const media = document.createElement('div')
+		media.classList.add('cardMedia')
+		media.setAttribute('data-id', item.id)
+	
+		//console.log(media.getAttribute('data-id'))
+			 //<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" />
+		
+		//console.log(item.isLiked)
+		media.innerHTML = `
+			<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" class="mediaPhotographer" />
+			<div class="mediaLikes">
+				<p id="titlePhoto">${item.title}</p>
+				<button	class="btnLike ${item.isLiked ? 'isLiked' : ''}">
+					<i class="fa-solid fa-heart"></i>
+					<i class="fa-regular fa-heart"></i>
+					<p id="likesPhoto">${item.likes}</p>	
+				</button>
+			</div>	`
+	
+		mediaPhotos.append(media)
 	}
-	return somme_coeurs;
 }
 
- const totalCoeurs = totalHearts([10, 20, 30, 40, 50]);
-//const totalCoeur = totalHearts()
+
+// variable coeur total d'une photo
+function totalHeartsPhoto() {
+	let somme_coeurs_photo = 0;
+
+	// on parcours le tableau des photos du photographe en utilisant la variable déjà créée
+	for(let i = 0; i < gallery_photos.length; i++) {
+		// on ajoute le nombre initial de likes
+		somme_coeurs_photo = somme_coeurs_photo + gallery_photos[i].likes;
+
+		// on ajoute 1 si la photo est likée
+		if(gallery_photos[i].isLiked == true) {
+			somme_coeurs_photo = somme_coeurs_photo + 1;
+		}
+	}
+	likesPhoto.innerHTML = somme_coeurs_photo;
+}
+
+// variable coeur total des photos
+function totalHearts() {
+	let somme_coeurs = 0;
+
+	// on parcours le tableau des photos du photographe en utilisant la variable déjà créée
+	for(let i = 0; i < gallery_photos.length; i++) {
+		// on ajoute le nombre initial de likes
+		somme_coeurs = somme_coeurs + gallery_photos[i].likes;
+
+		// on ajoute 1 si la photo est likée
+		if(gallery_photos[i].isLiked == true) {
+			somme_coeurs = somme_coeurs + 1;
+		}
+	}
+	totalLikes.innerHTML = somme_coeurs;
+}
+
+
+
+
+
+
+
+const btnLikes = document.querySelectorAll('.btnLike')
+console.log(btnLikes);
+for(let i = 0; i < btnLikes.length; i++) {
+	btnLikes[i].addEventListener('click', () => {
+		const parent = btnLikes[i].closest('.cardMedia');
+		const mediaID = parent.getAttribute('data-id');
+
+		for(let j = 0; j < gallery_photos.length; j++) {
+			if(gallery_photos[j].id == mediaID) {
+				console.log(gallery_photos[j]);
+				gallery_photos[j].isLiked = !gallery_photos[j].isLiked;
+				totalHearts();
+			}
+		}
+	})
+}
+
+
 
 
 
@@ -1336,16 +1401,15 @@ url = new URL(window.location.href);
 //console.log(pageID);
 
 let photographer_ID = url.searchParams.get("id");
-console.log(photographer_ID);
+// console.log(photographer_ID);
 
 // get the photographer data
 
 
 
 // get the photographer photos
-
 for(let i = 0; i < medias.length; i++) {
-	if(medias[i].photographerId  == photographer_ID) {
+	if(medias[i].photographerId == photographer_ID) {
 		const newMedia = {
 			...medias[i],
 			isLiked : true
@@ -1357,64 +1421,32 @@ for(let i = 0; i < medias.length; i++) {
 
 
 
+// appel des fonctions
+getPhotographerData();
+displayPhotographerInformations();
+mediasPhotographer();
+totalHeartsPhoto();
+totalHearts();
 
 
-// appael des fonctions
-getPhotographerData()
-displayPhotographerInformations()
-encart()
 
 
 
 
-// Update medias informations
-function mediasPhotographer() {
-	for(let i = 0; i < gallery_photos.length ; i++) {
-		const item = gallery_photos[i]
-	
-		const media = document.createElement('div')
-		media.classList.add('cardMedia')
-		media.setAttribute('data-id', item.id)
-	
-		//console.log(media.getAttribute('data-id'))
-			 //<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" />
-		
-		console.log(item.isLiked)
-		media.innerHTML = `
-			<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" class="mediaPhotographer" />
-			<div class="mediaLikes">
-				<p id="titlePhoto">${item.title}</p>
-				<button	class="btnLike ${item.isLiked ? 'isLiked' : ''}">
-				<p id="likesPhoto">${item.likes}</p>	
-				</button>
-			</div>	`
-	
-		mediaPhotos.append(media)
-	}
-}
 
-for(let i = 0; i < gallery_photos.length ; i++) {
-	const item = gallery_photos[i]
 
-	const media = document.createElement('div')
-	media.classList.add('cardMedia')
-	media.setAttribute('data-id', item.id)
 
-	//console.log(media.getAttribute('data-id'))
-	 	//<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" />
-	
-	console.log(item.isLiked)
-	media.innerHTML = `
-		<img src="./assets/images/FishEye_Photos/${myPhotographer.id}/${item.image}" alt="" class="mediaPhotographer" />
-		<div class="mediaLikes">
-			<p id="titlePhoto">${item.title}</p>
-			<button	class="btnLike ${item.isLiked ? 'isLiked' : ''}">
-			<p id="likesPhoto">${item.likes}</p>	
-			</button>
-		</div>	`
 
-	mediaPhotos.append(media)
-}
+// // appel des fonctions
+// getPhotographerData();
+// displayPhotographerInformations();
+// totalHearts();
+// mediasPhotographer();
+
+
+
+
+
 
 
 // TODO n°1
@@ -1461,12 +1493,3 @@ function photographerForm(data) {
 	}
 	return { name, portrait, city, country, tagline, price, id, getUserCard }
 }*/
-
-
-
-
-
-
-
-
-
